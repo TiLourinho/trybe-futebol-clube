@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Matches', {
+    await queryInterface.createTable('matches', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = {
       home_team: {
         allowNull: false,
         references: {
-          model: 'Teams',
+          model: 'teams',
           key: 'id'
         },
         type: Sequelize.INTEGER
@@ -22,7 +22,7 @@ module.exports = {
       away_team: {
         allowNull: false,
         references: {
-          model: 'Teams',
+          model: 'teams',
           key: 'id'
         },
         type: Sequelize.INTEGER
@@ -39,6 +39,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('Matches');
+    await queryInterface.dropTable('matches');
   }
 };
