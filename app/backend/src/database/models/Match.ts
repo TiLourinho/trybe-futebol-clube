@@ -33,7 +33,7 @@ Match.init({
     type: DataTypes.INTEGER,
   },
 }, {
-  modelName: 'Matches',
+  modelName: 'matches',
   sequelize: db,
   timestamps: false,
   underscored: true,

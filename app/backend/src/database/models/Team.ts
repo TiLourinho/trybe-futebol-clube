@@ -16,7 +16,7 @@ Team.init({
     type: DataTypes.STRING,
   },
 }, {
-  modelName: 'Teams',
+  modelName: 'teams',
   sequelize: db,
   timestamps: false,
   underscored: true,
