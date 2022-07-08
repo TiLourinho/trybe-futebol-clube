@@ -8,12 +8,13 @@ class UserService implements IUserS {
   }
 
   async login(data: IUser): Promise<string> {
-    const user = await this.model.checkUser({
+    const user = await this.model.login({
       where: { email: data.email },
     });
-    console.log('service', user);
 
-    if (!user) throw new Error('User doesn\'t exist');
+    if (!user || user.email !== data.email) {
+      throw new Error('User doesn\'t exist');
+    }
 
     const checkPassword = await bcrypt.compare(data.password as string, user.password as string);
 

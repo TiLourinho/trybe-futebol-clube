@@ -6,7 +6,7 @@ class UserRepository implements IUserM {
     this.model = model;
   }
 
-  async checkUser(data: object): Promise<IUser | null> {
+  async login(data: object): Promise<IUser | null> {
     const user = await this.model.findOne(data);
 
     return user as IUser;

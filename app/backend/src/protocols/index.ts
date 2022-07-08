@@ -7,7 +7,7 @@ export interface IUser {
 }
 
 export interface IUserM {
-  checkUser(data: object): Promise<IUser | null>
+  login(data: object): Promise<IUser | null>
 }
 
 export interface IUserS {

@@ -13,6 +13,7 @@ class UserController {
 
       return res.status(StatusCodes.OK).json({ token: user });
     } catch (err) {
+      console.log({ err });
       next(err);
     }
   }
