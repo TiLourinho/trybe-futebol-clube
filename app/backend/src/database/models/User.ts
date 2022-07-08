@@ -15,7 +15,7 @@ User.init({
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  userName: {
+  username: {
     type: DataTypes.STRING,
   },
   role: {
