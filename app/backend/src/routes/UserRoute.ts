@@ -2,6 +2,7 @@ import { Router } from 'express';
 import UserRepository from '../repositories/UserRepository';
 import UserService from '../services/UserService';
 import UserController from '../controllers/UserController';
+import validateLogin from '../middlewares/loginValidation';
 
 const userFactory = () => {
   const repository = new UserRepository();
@@ -13,7 +14,7 @@ const userFactory = () => {
 
 const userRouter: Router = Router();
 
-userRouter.post('/', (req, res, next) => {
+userRouter.post('/', validateLogin, (req, res, next) => {
   userFactory().login(req, res, next);
 });
 
