@@ -6,6 +6,9 @@ const errorMiddleware = (err: Error, _req: Request, res: Response, _next: NextFu
   if (err.status) {
     return res.status(err.status).json({ message: err.message });
   }
+  if (err.message?.includes('Invalid')) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect email or password' });
+  }
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal Server Error' });
 };
 

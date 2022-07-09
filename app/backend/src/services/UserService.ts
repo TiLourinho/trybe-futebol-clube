@@ -13,7 +13,7 @@ class UserService implements IUserS {
     });
 
     if (!user || user.email !== data.email) {
-      throw new Error('User doesn\'t exist');
+      throw new Error('Invalid email');
     }
 
     const checkPassword = await bcrypt.compare(data.password as string, user.password as string);
