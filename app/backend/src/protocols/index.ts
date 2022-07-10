@@ -21,10 +21,17 @@ export interface IError {
   message?: string;
 }
 
+export interface ITeam {
+  id: number;
+  teamName: string;
+}
+
 export interface ITeamM {
-  getAll(): Promise<object[]>
+  getAll(): Promise<ITeam[] | null>
+  getById(id: number): Promise<ITeam | null>
 }
 
 export interface ITeamS {
-  getAll(): Promise<object[]>
+  getAll(): Promise<ITeam[]>
+  getById(id: number): Promise<ITeam>
 }
