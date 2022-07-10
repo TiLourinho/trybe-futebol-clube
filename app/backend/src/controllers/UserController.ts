@@ -13,7 +13,17 @@ class UserController {
 
       return res.status(StatusCodes.OK).json({ token: user });
     } catch (err) {
-      console.log({ err });
+      next(err);
+    }
+  }
+
+  async validate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { authorization } = req.headers;
+      const role = await this.service.validate(authorization as string);
+
+      return res.status(StatusCodes.OK).json({ role });
+    } catch (err) {
       next(err);
     }
   }
