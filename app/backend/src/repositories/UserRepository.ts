@@ -11,6 +11,12 @@ class UserRepository implements IUserM {
 
     return user as IUser;
   }
+
+  async getById(id: number): Promise<IUser | null> {
+    const user = await this.model.findByPk(id);
+
+    return user;
+  }
 }
 
 export default UserRepository;
