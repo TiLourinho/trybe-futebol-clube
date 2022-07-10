@@ -18,4 +18,8 @@ userRouter.post('/', validateLogin, (req, res, next) => {
   userFactory().login(req, res, next);
 });
 
+userRouter.get('/validate', (req, res, next) => {
+  userFactory().validate(req, res, next);
+});
+
 export default userRouter;
