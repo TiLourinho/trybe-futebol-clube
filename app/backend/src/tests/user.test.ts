@@ -31,7 +31,7 @@ describe('1 - User', () => {
       (User.findOne as sinon.SinonStub).restore();
     });
   
-    it('tests if "login" has status 200 when succeeded', async () => {
+    it('tests if "login" has status 200 and "token" as key when succeeded', async () => {
       const response = await chai.request(app).post('/login').send(body);
   
       expect(response.status).to.be.equal(200);
@@ -48,7 +48,7 @@ describe('1 - User', () => {
       (User.findByPk as sinon.SinonStub).restore();
     });
   
-    it('tests if "validate" has status 200 when succeeded', async () => {
+    it('tests if "login" has status 200 and "role" as key when succeeded', async () => {
       const response = await chai.request(app).get('/login/validate')
         .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJVc2VyIiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTc0NzU5NTB9.CtUPSJJvxw-w_KCncuuMcw9kqnYz-ESIGSBhI26_RKg');
   
