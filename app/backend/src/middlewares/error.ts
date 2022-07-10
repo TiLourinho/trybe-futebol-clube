@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { Error } from '../protocols';
+import { IError } from '../protocols';
 
-const errorMiddleware = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+const errorMiddleware = (err: IError, _req: Request, res: Response, _next: NextFunction) => {
   if (err.status) {
     return res.status(err.status).json({ message: err.message });
   }
