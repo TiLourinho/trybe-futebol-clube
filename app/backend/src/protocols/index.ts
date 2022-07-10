@@ -21,9 +21,10 @@ export interface IError {
   message?: string;
 }
 
-export interface IDecoded {
-  username: string;
-  role: string;
-  email: string;
-  iat: number;
+export interface ITeamM {
+  getAll(): Promise<object[]>
+}
+
+export interface ITeamS {
+  getAll(): Promise<object[]>
 }
