@@ -29,21 +29,18 @@ class UserService implements IUserS {
 
   async validate(token: string): Promise<string> {
     const decoded = verifyJWT(token) as IUser;
-    console.log('Service decoded', decoded);
 
     if (!decoded || !decoded.id) {
       throw new Error('Failed JWT verification');
     }
 
     const user = await this.model.getById(decoded.id as number);
-    console.log('Service user', user);
 
     if (!user) {
       throw new Error('User doesn\'t exist');
     }
 
     const { role } = user;
-    console.log('Service role', role);
     return role as string;
   }
 }
