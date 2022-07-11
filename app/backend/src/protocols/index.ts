@@ -1,3 +1,8 @@
+export interface IError {
+  status?: number;
+  message?: string;
+}
+
 export interface IUser {
   id?: number;
   username?: string;
@@ -16,11 +21,6 @@ export interface IUserS {
   validate(token: string): Promise<string>
 }
 
-export interface IError {
-  status?: number;
-  message?: string;
-}
-
 export interface ITeam {
   id: number;
   teamName: string;
@@ -34,4 +34,21 @@ export interface ITeamM {
 export interface ITeamS {
   getAll(): Promise<ITeam[]>
   getById(id: number): Promise<ITeam>
+}
+
+export interface IMatch {
+  id: number;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: number;
+}
+
+export interface IMatchM {
+  getAll(): Promise<IMatch[] | null>
+}
+
+export interface IMatchS {
+  getAll(): Promise<IMatch[]>
 }
