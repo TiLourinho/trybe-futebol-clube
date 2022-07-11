@@ -16,6 +16,12 @@ class MatchService implements IMatchS {
 
     return newMatch;
   }
+
+  async update(id: number): Promise<object> {
+    const match = await this.model.update(id);
+
+    return match;
+  }
 }
 
 export default MatchService;
