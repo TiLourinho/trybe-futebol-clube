@@ -4,6 +4,9 @@ import UserController from '../controllers/UserController';
 import TeamRepository from '../repositories/TeamRepository';
 import TeamService from '../services/TeamService';
 import TeamController from '../controllers/TeamController';
+import MatchRepository from '../repositories/MatchRepository';
+import MatchService from '../services/MatchService';
+import MatchController from '../controllers/MatchController';
 
 const UserFactory = () => {
   const repository = new UserRepository();
@@ -21,7 +24,16 @@ const TeamFactory = () => {
   return controller;
 };
 
+const MatchFactory = () => {
+  const repository = new MatchRepository();
+  const service = new MatchService(repository);
+  const controller = new MatchController(service);
+
+  return controller;
+};
+
 export {
   UserFactory,
   TeamFactory,
+  MatchFactory,
 };
