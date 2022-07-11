@@ -10,6 +10,12 @@ class MatchService implements IMatchS {
 
     return matches as IMatch[];
   }
+
+  async create(match: object): Promise<object> {
+    const newMatch = await this.model.create(match);
+
+    return newMatch;
+  }
 }
 
 export default MatchService;
