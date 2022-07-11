@@ -22,6 +22,16 @@ class MatchController {
       next(err);
     }
   }
+
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const newMatch = await this.service.create(req.body);
+
+      return res.status(StatusCodes.CREATED).json(newMatch);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default MatchController;
