@@ -35,6 +35,13 @@ const matchesDB = [
 	},
 ] as Match[];
 
+const body = {
+	"homeTeam": 16,
+	"awayTeam": 12,
+	"homeTeamGoals": 4,
+	"awayTeamGoals": 2
+};
+
 describe('3 - Match', () => {
   describe('getAll method', () => { 
     before(() => {
@@ -50,6 +57,23 @@ describe('3 - Match', () => {
   
       expect(response.status).to.be.equal(200);
       expect(response.body).to.be.eql(matchesDB);
+    });
+  });
+
+	describe('create method', () => { 
+    before(() => {
+      sinon.stub(Match, 'create').resolves(body as Match);
+    });
+  
+    after(() => {
+      (Match.create as sinon.SinonStub).restore();
+    });
+  
+    it('tests if "create" has status 201 and the created match when succeeded', async () => {
+      const response = await chai.request(app).post('/matches').send(body);
+  
+      expect(response.status).to.be.equal(201);
+      expect(response.body).to.be.eql(body);
     });
   });
 });
