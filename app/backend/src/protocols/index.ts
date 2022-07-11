@@ -46,9 +46,9 @@ export interface IMatch {
 }
 
 export interface IMatchM {
-  getAll(): Promise<IMatch[] | null>
+  getAll(query: boolean | null): Promise<IMatch[] | null>
 }
 
 export interface IMatchS {
-  getAll(): Promise<IMatch[]>
+  getAll(query: boolean | null): Promise<IMatch[]>
 }

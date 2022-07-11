@@ -7,14 +7,26 @@ class MatchRepository implements IMatchM {
     this.model = model;
   }
 
-  async getAll(): Promise<IMatch[] | null> {
+  async getAll(query: boolean | null): Promise<IMatch[] | null> {
+    if (query === null) {
+      const matches = await this.model.findAll({
+        include: [
+          { model: Team, as: 'teamHome', attributes: { exclude: ['id'] } },
+          { model: Team, as: 'teamAway', attributes: { exclude: ['id'] } },
+        ],
+      });
+
+      return matches;
+    }
+
     const matches = await this.model.findAll({
+      where: { inProgress: query },
       include: [
         { model: Team, as: 'teamHome', attributes: { exclude: ['id'] } },
         { model: Team, as: 'teamAway', attributes: { exclude: ['id'] } },
       ],
     });
-    console.log('Repo matches', matches);
+
     return matches;
   }
 }

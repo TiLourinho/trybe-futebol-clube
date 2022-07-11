@@ -5,8 +5,8 @@ class MatchService implements IMatchS {
     this.model = model;
   }
 
-  async getAll(): Promise<IMatch[]> {
-    const matches = await this.model.getAll();
+  async getAll(query: boolean | null): Promise<IMatch[]> {
+    const matches = await this.model.getAll(query);
 
     return matches as IMatch[];
   }
