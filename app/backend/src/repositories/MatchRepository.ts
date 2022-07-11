@@ -41,6 +41,16 @@ class MatchRepository implements IMatchM {
 
     return newMatch;
   }
+
+  async update(id: number): Promise<object> {
+    await this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+
+    const message = { message: 'Finished' };
+    return message;
+  }
 }
 
 export default MatchRepository;
