@@ -47,8 +47,10 @@ export interface IMatch {
 
 export interface IMatchM {
   getAll(query: boolean | null): Promise<IMatch[] | null>
+  create(match: object): Promise<IMatch>
 }
 
 export interface IMatchS {
   getAll(query: boolean | null): Promise<IMatch[]>
+  create(match: object): Promise<object>
 }
