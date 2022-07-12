@@ -31,8 +31,14 @@ class MatchService implements IMatchS {
     return newMatch;
   }
 
-  async update(id: number): Promise<object> {
-    const match = await this.model.update(id);
+  async updateProgress(id: number): Promise<object> {
+    const match = await this.model.updateProgress(id);
+
+    return match;
+  }
+
+  async updateResult(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<object> {
+    const match = await this.model.updateResult(id, homeTeamGoals, awayTeamGoals);
 
     return match;
   }
