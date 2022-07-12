@@ -76,4 +76,25 @@ describe('3 - Match', () => {
       expect(response.body).to.be.eql(body);
     });
   });
+
+	describe('update method', () => {
+		const result = {
+			"message": "Finished",
+		}
+
+    before(() => {
+      sinon.stub(Match, 'update').resolves();
+    });
+  
+    after(() => {
+      (Match.update as sinon.SinonStub).restore();
+    });
+  
+    it('tests if "update" has status 200 and an object when succeeded', async () => {
+      const response = await chai.request(app).patch('/matches/41/finish');
+  
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.be.eql(result);
+    });
+  });
 });
