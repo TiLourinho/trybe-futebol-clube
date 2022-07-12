@@ -1,4 +1,7 @@
 import { IMatch, IMatchM, IMatchS } from '../protocols';
+import TeamRepository from '../repositories/TeamRepository';
+
+const Team = new TeamRepository();
 
 class MatchService implements IMatchS {
   constructor(private model: IMatchM) {
@@ -12,6 +15,13 @@ class MatchService implements IMatchS {
   }
 
   async create(match: IMatch): Promise<object> {
+    const homeTeam = await Team.getById(match.homeTeam);
+    const awayTeam = await Team.getById(match.awayTeam);
+
+    if (!homeTeam || !awayTeam) {
+      throw new Error('Nonexistent team');
+    }
+
     if (match.homeTeam === match.awayTeam) {
       throw new Error('Impossible match');
     }

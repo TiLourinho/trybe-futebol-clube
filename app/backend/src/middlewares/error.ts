@@ -13,6 +13,9 @@ const errorMiddleware = (err: IError, _req: Request, res: Response, _next: NextF
     return res.status(StatusCodes.UNAUTHORIZED)
       .json({ message: 'It is not possible to create a match with two equal teams' });
   }
+  if (err.message?.includes('Nonexistent')) {
+    return res.status(StatusCodes.NOT_FOUND).json({ message: 'There is no team with such id!' });
+  }
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal Server Error' });
 };
 
