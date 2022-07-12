@@ -33,10 +33,22 @@ class MatchController {
     }
   }
 
-  async update(req: Request, res: Response, next: NextFunction) {
+  async updateProgress(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const match = await this.service.update(Number(id));
+      const match = await this.service.updateProgress(Number(id));
+
+      return res.status(StatusCodes.OK).json(match);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async updateResult(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+      const match = await this.service.updateResult(Number(id), homeTeamGoals, awayTeamGoals);
 
       return res.status(StatusCodes.OK).json(match);
     } catch (err) {
