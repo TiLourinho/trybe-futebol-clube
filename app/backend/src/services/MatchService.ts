@@ -11,7 +11,11 @@ class MatchService implements IMatchS {
     return matches as IMatch[];
   }
 
-  async create(match: object): Promise<object> {
+  async create(match: IMatch): Promise<object> {
+    if (match.homeTeam === match.awayTeam) {
+      throw new Error('Impossible match');
+    }
+
     const newMatch = await this.model.create(match);
 
     return newMatch;
