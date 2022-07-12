@@ -42,13 +42,23 @@ class MatchRepository implements IMatchM {
     return newMatch;
   }
 
-  async update(id: number): Promise<object> {
+  async updateProgress(id: number): Promise<object> {
     await this.model.update(
       { inProgress: false },
       { where: { id } },
     );
 
     const message = { message: 'Finished' };
+    return message;
+  }
+
+  async updateResult(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<object> {
+    await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
+      { where: { id } },
+    );
+
+    const message = { message: 'Updated' };
     return message;
   }
 }
