@@ -13,7 +13,11 @@ matchRouter.post('/', authToken, (req, res, next) => {
 });
 
 matchRouter.patch('/:id/finish', (req, res, next) => {
-  MatchFactory().update(req, res, next);
+  MatchFactory().updateProgress(req, res, next);
+});
+
+matchRouter.patch('/:id', (req, res, next) => {
+  MatchFactory().updateResult(req, res, next);
 });
 
 export default matchRouter;
