@@ -7,9 +7,19 @@ class LeaderboardController {
     this.service = service;
   }
 
-  async getAll(_req: Request, res: Response, next: NextFunction) {
+  async getAllHome(_req: Request, res: Response, next: NextFunction) {
     try {
-      const teams = await this.service.getAll();
+      const teams = await this.service.getAllHome();
+
+      return res.status(StatusCodes.OK).json(teams);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getAllAway(_req: Request, res: Response, next: NextFunction) {
+    try {
+      const teams = await this.service.getAllAway();
 
       return res.status(StatusCodes.OK).json(teams);
     } catch (err) {
