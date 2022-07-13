@@ -7,6 +7,8 @@ import TeamController from '../controllers/TeamController';
 import MatchRepository from '../repositories/MatchRepository';
 import MatchService from '../services/MatchService';
 import MatchController from '../controllers/MatchController';
+import LeaderboardService from '../services/LeaderboardService';
+import LeaderboardController from '../controllers/LeaderboardController';
 
 const UserFactory = () => {
   const repository = new UserRepository();
@@ -32,8 +34,18 @@ const MatchFactory = () => {
   return controller;
 };
 
+const LeaderboardFactory = () => {
+  const teamRepository = new TeamRepository();
+  const matchRepository = new MatchRepository();
+  const service = new LeaderboardService(teamRepository, matchRepository);
+  const controller = new LeaderboardController(service);
+
+  return controller;
+};
+
 export {
   UserFactory,
   TeamFactory,
   MatchFactory,
+  LeaderboardFactory,
 };
