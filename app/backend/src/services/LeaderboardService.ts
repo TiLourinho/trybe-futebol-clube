@@ -7,13 +7,28 @@ class LeaderboardService implements ILeaderboardS {
     this.matchModel = matchModel;
   }
 
-  async getAll(): Promise<ILeaderboard[]> {
+  async getAllHome(): Promise<ILeaderboard[]> {
     const teams = await this.teamModel.getAll();
     const matches = await this.matchModel.getAll(false);
 
     const leaderboard = teams?.map((team) => {
       const teamMatches = matches?.filter((match) => match.homeTeam === team.id) as IMatch[];
-      const result = getLeaderboard(team, teamMatches);
+      const result = getLeaderboard(team, teamMatches, 'home');
+
+      return result;
+    });
+
+    const sortedLeaderboard = sortLeaderboard(leaderboard as ILeaderboard[]);
+    return sortedLeaderboard;
+  }
+
+  async getAllAway(): Promise<ILeaderboard[]> {
+    const teams = await this.teamModel.getAll();
+    const matches = await this.matchModel.getAll(false);
+
+    const leaderboard = teams?.map((team) => {
+      const teamMatches = matches?.filter((match) => match.awayTeam === team.id) as IMatch[];
+      const result = getLeaderboard(team, teamMatches, 'away');
 
       return result;
     });

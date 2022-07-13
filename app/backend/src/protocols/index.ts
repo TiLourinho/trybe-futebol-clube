@@ -73,5 +73,6 @@ export interface ILeaderboard {
 }
 
 export interface ILeaderboardS {
-  getAll(): Promise<ILeaderboard[]>
+  getAllHome(): Promise<ILeaderboard[]>
+  getAllAway(): Promise<ILeaderboard[]>
 }
