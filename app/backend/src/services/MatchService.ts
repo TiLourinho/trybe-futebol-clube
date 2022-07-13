@@ -1,5 +1,7 @@
+import { StatusCodes } from 'http-status-codes';
 import { IMatch, IMatchM, IMatchS } from '../protocols';
 import TeamRepository from '../repositories/TeamRepository';
+import ErrorHandler from '../utils/errorHandler';
 
 const Team = new TeamRepository();
 
@@ -19,11 +21,14 @@ class MatchService implements IMatchS {
     const awayTeam = await Team.getById(match.awayTeam);
 
     if (!homeTeam || !awayTeam) {
-      throw new Error('Nonexistent team');
+      throw new ErrorHandler(StatusCodes.NOT_FOUND, 'There is no team with such id!');
     }
 
     if (match.homeTeam === match.awayTeam) {
-      throw new Error('Impossible match');
+      throw new ErrorHandler(
+        StatusCodes.UNAUTHORIZED,
+        'It is not possible to create a match with two equal teams',
+      );
     }
 
     const newMatch = await this.model.create(match);
