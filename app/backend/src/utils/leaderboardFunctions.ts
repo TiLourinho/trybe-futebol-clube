@@ -1,9 +1,18 @@
 import { ILeaderboard, ITeam, IMatch } from '../protocols';
 
-const getTotalPoints = (matches: IMatch[]) => {
+const getTotalPoints = (matches: IMatch[], fieldOfPlay: string) => {
+  if (fieldOfPlay === 'home') {
+    const totalPoints = matches.reduce((acc, curr) => {
+      if (curr.homeTeamGoals > curr.awayTeamGoals) return acc + 3;
+      if (curr.homeTeamGoals === curr.awayTeamGoals) return acc + 1;
+      return acc;
+    }, 0);
+
+    return totalPoints;
+  }
   const totalPoints = matches.reduce((acc, curr) => {
-    if (curr.homeTeamGoals > curr.awayTeamGoals) return acc + 3;
-    if (curr.homeTeamGoals === curr.awayTeamGoals) return acc + 1;
+    if (curr.awayTeamGoals > curr.homeTeamGoals) return acc + 3;
+    if (curr.awayTeamGoals === curr.homeTeamGoals) return acc + 1;
     return acc;
   }, 0);
 
@@ -16,9 +25,17 @@ const getTotalGames = (matches: IMatch[]) => {
   return totalGames;
 };
 
-const getTotalVictories = (matches: IMatch[]) => {
+const getTotalVictories = (matches: IMatch[], fieldOfPlay: string) => {
+  if (fieldOfPlay === 'home') {
+    const totalVictories = matches.reduce((acc, curr) => {
+      if (curr.homeTeamGoals > curr.awayTeamGoals) return acc + 1;
+      return acc;
+    }, 0);
+
+    return totalVictories;
+  }
   const totalVictories = matches.reduce((acc, curr) => {
-    if (curr.homeTeamGoals > curr.awayTeamGoals) return acc + 1;
+    if (curr.awayTeamGoals > curr.homeTeamGoals) return acc + 1;
     return acc;
   }, 0);
 
@@ -34,35 +51,53 @@ const getTotalDraws = (matches: IMatch[]) => {
   return totalDraws;
 };
 
-const getTotalLosses = (matches: IMatch[]) => {
+const getTotalLosses = (matches: IMatch[], fieldOfPlay: string) => {
+  if (fieldOfPlay === 'home') {
+    const totalLosses = matches.reduce((acc, curr) => {
+      if (curr.homeTeamGoals < curr.awayTeamGoals) return acc + 1;
+      return acc;
+    }, 0);
+
+    return totalLosses;
+  }
   const totalLosses = matches.reduce((acc, curr) => {
-    if (curr.homeTeamGoals < curr.awayTeamGoals) return acc + 1;
+    if (curr.awayTeamGoals < curr.homeTeamGoals) return acc + 1;
     return acc;
   }, 0);
 
   return totalLosses;
 };
 
-const getGoalsFavor = (matches: IMatch[]) => {
-  const goalsFavor = matches.reduce((acc, curr) => acc + curr.homeTeamGoals, 0);
+const getGoalsFavor = (matches: IMatch[], fieldOfPlay: string) => {
+  if (fieldOfPlay === 'home') {
+    const goalsFavor = matches.reduce((acc, curr) => acc + curr.homeTeamGoals, 0);
+
+    return goalsFavor;
+  }
+  const goalsFavor = matches.reduce((acc, curr) => acc + curr.awayTeamGoals, 0);
 
   return goalsFavor;
 };
 
-const getGoalsOwn = (matches: IMatch[]) => {
-  const goalsOwn = matches.reduce((acc, curr) => acc + curr.awayTeamGoals, 0);
+const getGoalsOwn = (matches: IMatch[], fieldOfPlay: string) => {
+  if (fieldOfPlay === 'home') {
+    const goalsOwn = matches.reduce((acc, curr) => acc + curr.awayTeamGoals, 0);
+
+    return goalsOwn;
+  }
+  const goalsOwn = matches.reduce((acc, curr) => acc + curr.homeTeamGoals, 0);
 
   return goalsOwn;
 };
 
-const getGoalsBalance = (matches: IMatch[]) => {
-  const goalsBalance = getGoalsFavor(matches) - getGoalsOwn(matches);
+const getGoalsBalance = (matches: IMatch[], fieldOfPlay: string) => {
+  const goalsBalance = getGoalsFavor(matches, fieldOfPlay) - getGoalsOwn(matches, fieldOfPlay);
 
   return goalsBalance;
 };
 
-const getEfficiency = (matches: IMatch[]) => {
-  const calculation = (getTotalPoints(matches) / (getTotalGames(matches) * 3)) * 100;
+const getEfficiency = (matches: IMatch[], fieldOfPlay: string) => {
+  const calculation = (getTotalPoints(matches, fieldOfPlay) / (getTotalGames(matches) * 3)) * 100;
   const efficiency = parseFloat(calculation.toFixed(2));
 
   return efficiency;
@@ -86,18 +121,18 @@ const sortLeaderboard = (leaderboard: ILeaderboard[]) => {
   return sortedLeaderboard;
 };
 
-const getLeaderboard = (teams: ITeam, matches: IMatch[]) => {
+const getLeaderboard = (teams: ITeam, matches: IMatch[], fieldOfPlay: string) => {
   const result = {
     name: teams.teamName,
-    totalPoints: getTotalPoints(matches),
+    totalPoints: getTotalPoints(matches, fieldOfPlay),
     totalGames: getTotalGames(matches),
-    totalVictories: getTotalVictories(matches),
+    totalVictories: getTotalVictories(matches, fieldOfPlay),
     totalDraws: getTotalDraws(matches),
-    totalLosses: getTotalLosses(matches),
-    goalsFavor: getGoalsFavor(matches),
-    goalsOwn: getGoalsOwn(matches),
-    goalsBalance: getGoalsBalance(matches),
-    efficiency: getEfficiency(matches),
+    totalLosses: getTotalLosses(matches, fieldOfPlay),
+    goalsFavor: getGoalsFavor(matches, fieldOfPlay),
+    goalsOwn: getGoalsOwn(matches, fieldOfPlay),
+    goalsBalance: getGoalsBalance(matches, fieldOfPlay),
+    efficiency: getEfficiency(matches, fieldOfPlay),
   };
 
   return result;
