@@ -70,14 +70,16 @@ describe('3 - Match', () => {
     });
   
     it('tests if "create" has status 201 and the created match when succeeded', async () => {
-      const response = await chai.request(app).post('/matches').send(body);
+      const response = await chai.request(app).post('/matches')
+      .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJVc2VyIiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpYXQiOjE2NTc0NzU5NTB9.CtUPSJJvxw-w_KCncuuMcw9kqnYz-ESIGSBhI26_RKg')
+      .send(body);
   
       expect(response.status).to.be.equal(201);
       expect(response.body).to.be.eql(body);
     });
   });
 
-	describe('update method', () => {
+	describe('updateProgress method', () => {
 		const result = {
 			"message": "Finished",
 		}
@@ -90,8 +92,29 @@ describe('3 - Match', () => {
       (Match.update as sinon.SinonStub).restore();
     });
   
-    it('tests if "update" has status 200 and an object when succeeded', async () => {
+    it('tests if "updateProgress" has status 200 and an object when succeeded', async () => {
       const response = await chai.request(app).patch('/matches/41/finish');
+  
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.be.eql(result);
+    });
+  });
+
+  describe('updateResult method', () => {
+		const result = {
+			"message": "Updated",
+		}
+
+    before(() => {
+      sinon.stub(Match, 'update').resolves();
+    });
+  
+    after(() => {
+      (Match.update as sinon.SinonStub).restore();
+    });
+  
+    it('tests if "updateResult" has status 200 and an object when succeeded', async () => {
+      const response = await chai.request(app).patch('/matches/41');
   
       expect(response.status).to.be.equal(200);
       expect(response.body).to.be.eql(result);
