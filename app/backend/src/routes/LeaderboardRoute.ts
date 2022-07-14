@@ -11,4 +11,8 @@ leaderboardRouter.get('/away', (req, res, next) => {
   LeaderboardFactory().getAllAway(req, res, next);
 });
 
+leaderboardRouter.get('/', (req, res, next) => {
+  LeaderboardFactory().getAllLeaderboard(req, res, next);
+});
+
 export default leaderboardRouter;
