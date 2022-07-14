@@ -138,7 +138,30 @@ const getLeaderboard = (teams: ITeam, matches: IMatch[], fieldOfPlay: string) =>
   return result;
 };
 
+const getAllLeaderboard = (teams: ITeam, homeMatches: IMatch[], awayMatches: IMatch[]) => {
+  const efficiencyCalculation = (
+    (getTotalPoints(homeMatches, 'home') + getTotalPoints(awayMatches, 'away'))
+    / ((getTotalGames(homeMatches) + getTotalGames(awayMatches)) * 3)
+  ) * 100;
+
+  const result = {
+    name: teams.teamName,
+    totalPoints: getTotalPoints(homeMatches, 'home') + getTotalPoints(awayMatches, 'away'),
+    totalGames: getTotalGames(homeMatches) + getTotalGames(awayMatches),
+    totalVictories: getTotalVictories(homeMatches, 'home') + getTotalVictories(awayMatches, 'away'),
+    totalDraws: getTotalDraws(homeMatches) + getTotalDraws(awayMatches),
+    totalLosses: getTotalLosses(homeMatches, 'home') + getTotalLosses(awayMatches, 'away'),
+    goalsFavor: getGoalsFavor(homeMatches, 'home') + getGoalsFavor(awayMatches, 'away'),
+    goalsOwn: getGoalsOwn(homeMatches, 'home') + getGoalsOwn(awayMatches, 'away'),
+    goalsBalance: getGoalsBalance(homeMatches, 'home') + getGoalsBalance(awayMatches, 'away'),
+    efficiency: parseFloat(efficiencyCalculation.toFixed(2)),
+  };
+
+  return result;
+};
+
 export {
   getLeaderboard,
+  getAllLeaderboard,
   sortLeaderboard,
 };
