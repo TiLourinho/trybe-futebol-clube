@@ -9,9 +9,9 @@ class LeaderboardController {
 
   async getAllHome(_req: Request, res: Response, next: NextFunction) {
     try {
-      const teams = await this.service.getAllHome();
+      const leaderboard = await this.service.getAllHome();
 
-      return res.status(StatusCodes.OK).json(teams);
+      return res.status(StatusCodes.OK).json(leaderboard);
     } catch (err) {
       next(err);
     }
@@ -19,9 +19,19 @@ class LeaderboardController {
 
   async getAllAway(_req: Request, res: Response, next: NextFunction) {
     try {
-      const teams = await this.service.getAllAway();
+      const leaderboard = await this.service.getAllAway();
 
-      return res.status(StatusCodes.OK).json(teams);
+      return res.status(StatusCodes.OK).json(leaderboard);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getAllLeaderboard(req: Request, res: Response, next: NextFunction) {
+    try {
+      const leaderboard = await this.service.getAllLeaderboard();
+
+      return res.status(StatusCodes.OK).json(leaderboard);
     } catch (err) {
       next(err);
     }
